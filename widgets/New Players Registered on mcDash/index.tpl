@@ -9,7 +9,7 @@ if(!empty($array))
 {
     foreach($array as $name)
     {
-        echo '<a href="./?act=3duser&user='.$name.'" class="iframe"><img width="30px" height="30px" title="'.$name.'" style="margin:3px;" src="'.$HeadAPI.'?player='.$name.'&size=30"/></a>';
+        echo '<a href="./?act=3duser&user='.$name.'" class="iframe"><img width="30px" height="30px" title="'.$name.'" style="margin:3px 3px 1px 3px;" src="'.$HeadAPI.'?player='.$name.'&size=30"/></a>';
         if($int++ + 1 >= 40) break;
     }
     echo '

@@ -1,0 +1,117 @@
+body {
+    font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+    font-size: 66.5%;
+}
+* {
+outline:none;
+}
+.ui-widget-content {
+background:white;
+}
+b {
+    color:black;
+}
+#plugsettiframe {
+width:575px;
+height:50%;
+border:none;
+}
+.w {
+  color:rgb(53, 53, 53);
+  padding:3px;
+  background-color:rgba(0, 0, 0, 0.05);
+  border:1px solid rgb(210, 210, 210);
+  -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
+  transition: 0.3s;
+  border-radius:4px;
+  height:25px;
+  line-height:25px;
+}
+.fieldsmall {
+    color:rgb(53, 53, 53);
+    display:inline-block;
+    -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
+    transition: 0.3s;
+}
+.right {
+    float:right;
+}
+p input {
+  height:24px;
+  border-radius:4px;
+  border:1px solid lightgray;
+}
+.w:hover {
+  background-color:rgba(0, 0, 0, 0.1);
+}
+hr {
+  border:0;
+  border-bottom:1px solid rgb(176, 176, 176);
+}
+li {
+    -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
+    transition: 0.3s;
+}
+fieldset {
+  border:1px solid rgb(210, 210, 210);
+  background-color:rgba(0, 0, 0, 0.05);
+  border-radius:4px;
+}
+.fieldsmall input {
+  width:100%;
+  display:inline-block;
+  margin-top:-1px;
+}
+.fieldsmall:hover {
+  background-color:rgba(0, 0, 0, 0.1);
+}
+#dbody {
+    border:1px dashed lightgray;
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+#dialog .packbutt {
+    border:1px dashed lightgray;
+    height:50px;
+    font-size:15px;
+    overflow:hidden;
+    margin-top:-1px;
+}
+#dialog .packbutt .icon {
+    height:50px;
+    width:50px;
+    vertical-align:middle;
+    margin-right:10px;
+    border-right: 1px dashed lightgray;
+}
+#dialog .packbutt span {
+    float:right;
+    width:300px;
+    font-size:12px;
+    border-left: 1px dashed lightgray;
+    height:50px;
+    padding:3px;
+    overflow-y:auto;
+}
+#dialog .packbutt #prop {
+    width:60px;
+    font-size:10px;
+}
+#dialog .packbutt .but {
+    width:50px;
+    text-align:center;
+    padding-top:15px;
+    cursor:pointer;
+    -webkit-transition:.1s;
+    transition:.1s;
+    text-decoration: underline;
+}
+#dialog .packbutt .but:hover {
+    background-color:whitesmoke;
+    text-decoration: none;
+}
+#dialog .packbutt .but:active {
+    background-color:white;
+    color:lightgray;
+}

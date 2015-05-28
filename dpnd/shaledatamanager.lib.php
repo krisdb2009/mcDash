@@ -1,10 +1,10 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.3 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.4 // Unix Safe // Collision Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
 $crypt        = $DBencryptionKey; //16/24/32 Char long key
-$cryptEnabled = false;
+$cryptEnabled = true;
 //
 
 //Clean path input because its dirty
@@ -29,7 +29,7 @@ function loadDB($path)
         $file = fopen($pathToDB.$path.$ext, "r"); //File Path Open
         if(flock($file, LOCK_SH)) //If can lock read.
         {
-            return json_decode(decrypt(fread($file, filesize($pathToDB.$path.$ext)), $crypt), true);
+            return json_decode(decrypt(@fread($file, filesize($pathToDB.$path.$ext)), $crypt), true);
             flock($file, LOCK_UN);
             $success = true;
         }
@@ -135,7 +135,7 @@ function decrypt($data, $key)
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
         $iv = substr($data, 0, $iv_size);
         $data = substr($data, $iv_size);
-        return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv), chr(0));
+        return rtrim(@mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv), chr(0));
     }
     else
     {

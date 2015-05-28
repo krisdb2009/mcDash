@@ -49,13 +49,13 @@ if($_GET['act'] == 'plugin' and isset($_GET['plugin']))
 {
     if(!isset($settings['plugins-enabled']) or $settings['plugins-enabled'] !== 'false')
     {
-        if(file_exists('plugins/'.$_GET['plugin'].'/index.tpl'))
+        if(file_exists('apps/'.$_GET['plugin'].'/index.tpl') and strpos($_GET['plugin'], '~disabled') == false)
         {
-            require('plugins/'.$_GET['plugin'].'/index.tpl');
+            require('apps/'.$_GET['plugin'].'/index.tpl');
         }
         else
         {
-            echo '<center><h1>The plugin was not loaded correctly...</h1>';
+            echo '<center><h1>The app was not loaded correctly...</h1>';
         }
     }
     exit;
@@ -162,29 +162,48 @@ if($_GET['act'] == 'changepass')
 }
 //
 
+//act=pluginsettings&plugin&location
+if($_GET['act'] == 'pluginsettings' and isset($_GET['location']) and isset($_GET['plugin']) and isloggedin() and username() == $AdminUsername)
+{
+    if(is_file($_GET['location'].'/'.$_GET['plugin'].'/settings.tpl'))
+    {
+        include($_GET['location'].'/'.$_GET['plugin'].'/settings.tpl');
+        exit;
+    }
+    else
+    {
+        echo '<center><h1>Cannot find any settings...</h1>';
+        exit;
+    }
+}  
+//
+
 //act=getchat
 if($_GET['act'] == 'getchat')
 {
-    if(isset($settings['liveChat-historylength']))
+    if(!isset($settings['liveChat-enabled']) or $settings['liveChat-enabled'] !== 'false')
     {
-        $amm = $settings['liveChat-historylength'];
-    }
-    else
-    {
-        $amm = 25;
-    }
-    $chatstream = (json_decode(sendjson('streams.chat.latest', '"'.$amm.'"')));
-    if(isset($chatstream) and isset($chatstream[0]->success))
-    {
-        foreach($chatstream[0]->success as $chatline)
+        if(isset($settings['liveChat-historylength']))
         {
-            echo '<a href="?act=3duser&user='.$chatline->player.'" class="iframe chatlinelink"><img title="'.$chatline->player.'" src="'.$HeadAPI.'?player='.$chatline->player.'&size=16"><<span class="livechatname">'.$chatline->player.'</span></a>> '.clean($chatline->message).'<br>';
+            $amm = $settings['liveChat-historylength'];
         }
-        echo '<script>$.resetIframeMagPopup();</script>';
-    }
-    else
-    {
-        echo '<center><h1>Minecraft server is Offline</h1><br>Chat will be temporarily unavalible until service is restored on the Minecraft Server.</center>';
+        else
+        {
+            $amm = 25;
+        }
+        $chatstream = (json_decode(sendjson('streams.chat.latest', '"'.$amm.'"')));
+        if(isset($chatstream) and isset($chatstream[0]->success))
+        {
+            foreach($chatstream[0]->success as $chatline)
+            {
+                echo '<div id="scomment"><a href="?act=3duser&user=' . $chatline->player . '" class="iframe" title="View Profile"><img src="' . $HeadAPI . '?size=16&player=' . $chatline->player . '"></a><span>&lt;'.date("M d&#183;g:ia", $chatline->time).'&#183;</span><a href="?act=3duser&user=' . $chatline->player . '" class="iframe" title="View Profile">' . $chatline->player . '</a><span>&gt;</span> ' . $chatline->message . '</div>';
+            }
+            echo '<script>$.resetIframeMagPopup();</script>';
+        }
+        else
+        {
+            echo '<center><h1>Minecraft server is Offline</h1><br>Chat will be temporarily unavailable until service is restored on the Minecraft Server.</center>';
+        }
     }
     exit;
 }
@@ -236,8 +255,7 @@ if($_GET['act'] == 'like' and isset($_GET['post']))
             }
             else
             {
-                echo '403 FORBIDDEN - Do this again and you will be added to the ban-list.';
-                header('location: ./');
+                echo 'Error';
             }
         }
         else
@@ -245,6 +263,80 @@ if($_GET['act'] == 'like' and isset($_GET['post']))
             echo 'Please Login to like this post.';
         }
     }
+    exit;
+}
+//
+
+//Post a feed comment ?act=feedcomment
+if($_GET['act'] == 'feedcomment' and !empty($_POST['postcon']) and isset($_POST['id']) and isloggedin())
+{
+    if(!isset($settings['feed-enabled']) or $settings['feed-enabled'] !== 'false')
+    {
+        if(isset($settings['feed-maxCharacters']))
+        {
+            $amm = $settings['feed-maxCharacters'];
+        }
+        else
+        {
+            $amm = 5000;
+        }
+        if(strlen($_POST['postcon']) <= $amm) //MAX POST CHARACTERS
+        {
+            $data = loadDB('feed');
+            if(isset($data[$_POST['id']]))
+            {
+                if(!isset($data[$_POST['id']]['comments']))
+                {
+                    $data[$_POST['id']]['comments'] = array();
+                }
+                $info = $data[$_POST['id']]['comments'];
+                $topID = 0;
+                if(is_array($info))
+                {
+                    foreach($info as $key => $val)
+                    {
+                        if($topID < $key)
+                        {
+                            $topID = $key;
+                        }
+                    }
+                }
+                $topID = $topID + 1;
+                $info[$topID]['owner'] = username();
+                $info[$topID]['time'] = time();
+                $info[$topID]['val'] = $_POST['postcon'];
+                if(isset($settings['feed-maxPosts']))
+                {
+                    $maxpos = $settings['feed-maxPosts'];
+                }
+                else
+                {
+                    $maxpos = 30;
+                }
+                if(count($info) > $maxpos) //Max posts
+                {
+                    $info[min(array_keys($info))] = null;
+                    unset($info[min(array_keys($info))]);
+                }
+                $data[$_POST['id']]['comments'] = $info;
+                putDB($data, 'feed');   
+            }
+            else
+            {
+                echo 'doesnotexist';
+            }
+        }
+    }
+    exit;
+}
+elseif($_GET['act'] == 'feedcomment' and !empty($_POST['postcon']))
+{
+    echo 'denied';
+    exit;
+}
+elseif($_GET['act'] == 'feedcomment')
+{
+    echo 'missing';
     exit;
 }
 //
@@ -296,30 +388,69 @@ if($_GET['act'] == 'feedpost' and !empty($_POST['postcon']) and isloggedin())
             putDB($info, 'feed');
             $_GET['active'] = 'tab-4';
             $_GET['feedmessage'] = '4';
-            //header('location: ./?active=tab-4&feedmessage=4');
         }
         else
         {
             $_GET['active'] = 'tab-4';
             $_GET['feedmessage'] = '5';
-            //header('location: ./?active=tab-4&feedmessage=5');
         }
     }
+}
+//
+
+//View all feed comments act=viewfeedcomments&id=*&amount=*
+if($_GET['act'] == 'viewfeedcomments' and isset($_GET['id']))
+{
+    $data = loadDB('feed');
+    if(isset($data[$_GET['id']]['comments']) and !empty($data[$_GET['id']]['comments']) and is_array($data[$_GET['id']]['comments']))
+    {
+        $count = 0;
+        foreach($data[$_GET['id']]['comments'] as  $cid => $comment)
+        {
+            $count++;
+            if(isset($_GET['amount']) and ($count <= count($data[$_GET['id']]['comments']) - $_GET['amount']))
+            {
+                continue;
+            }
+            $inject = null;
+            if($comment['owner'] == username() or username() == $AdminUsername)
+            {
+                $inject = '[<a title="Delete" class="iframe" href="?act=deletefeedcomment&pid='.$_GET['id'].'&cid='.$cid.'">X</a>]';
+            }
+            echo '<div id="scomment"><a href="?act=3duser&user=' . $comment['owner'] . '" class="iframe" title="View Profile"><img src="' . $HeadAPI . '?size=16&player=' . $comment['owner'] . '"></a><span>'.$inject.'&lt;'.date("M d&#183;g:ia", $comment['time']).'&#183;</span><a href="?act=3duser&user=' . $comment['owner'] . '" class="iframe" title="View Profile">' . $comment['owner'] . '</a><span>&gt;</span> ' . $comment['val'] . '</div>';
+        }
+    }
+    else
+    {
+        echo 'notfound';
+    }
+    exit;
+}
+//
+
+//?act=deletefeedcomment&pid=&cid= // pid is post id, cid is comment id
+if($_GET['act'] == 'deletefeedcomment' and isset($_GET['pid']) and isset($_GET['cid']))
+{
+    include('act/deletefeedcomment.tpl');
+    exit;
 }
 //
 
 //act=dash&widget=*NAME*
 if($_GET['act'] == 'dash' and isset($_GET['widget']))
 {
-    if(file_exists('widgets/'.$_GET['widget'].'/index.tpl'))
-    {
-        include('widgets/'.$_GET['widget'].'/index.tpl');
-    }
-    else
-    {
-        echo 'Failed to load widget.';
-    }
-    exit;
+	if(!isset($settings['enableDash']) or $settings['enableDash'] !== 'false')
+	{
+		if(file_exists('widgets/'.$_GET['widget'].'/index.tpl') and strpos($_GET['widget'], '~disabled') == false)
+		{
+			include('widgets/'.$_GET['widget'].'/index.tpl');
+		}
+		else
+		{
+			echo 'Failed to load widget.';
+		}
+		exit;
+	}
 }
 //
 

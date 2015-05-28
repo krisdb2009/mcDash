@@ -12,18 +12,20 @@
 <!DOCTYPE html>
 <!--
 Author: krisdb2009 from Below Average
+URL: http://belowaverage.ga/mcDash/
+Email: krisdb2009@belowaverage.ga
 Credits: Please see <?php echo URL(); ?>/dpnd/About%20These%20Files.txt
-Project Title: mcDash
+Project Name: mcDash
 Project Release Version: <?php echo $version; ?>
 
 Project Description: A functional, elegant, intuitive way to allow a player access the Minecraft server from the server's website.
-Project Date: July 4th 2014 -> Still in DEV
-Need help? Message me on skype, (dylan.bickerstaff).
+Project Development: July 4th 2014 -> Current Date.
+Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
 -->
 <head>
     <meta charset="utf-8">
     <title><?php if(isset($settings['Title'])) echo $settings['Title']; else echo 'mcDash'; ?></title>
-    <link media="all" rel="stylesheet" type="text/css" href="dpnd/css/all.css"/>
+    <link media="all" rel="stylesheet" type="text/css" href="dpnd/css/all.css">
     <script type="text/javascript" src="dpnd/js/jquery.min.js"></script>
     <script type="text/javascript" src="dpnd/js/jquery.main.js"></script>
     <script type="text/javascript" src="dpnd/js/jquery-ui.min.js"></script>
@@ -102,6 +104,7 @@ Need help? Message me on skype, (dylan.bickerstaff).
                 </div>
             </div>
             <div class="tabs">
+                <?php if(!isset($settings['enableDash']) or $settings['enableDash'] !== 'false') { ?>
                 <div id="tab-1" class="tab">
                     <article>
                         <div class="text-section">
@@ -116,58 +119,59 @@ Need help? Message me on skype, (dylan.bickerstaff).
                         </center>
                     </article>
                 </div>
-				<?php if(!isset($settings['gallery-Enable']) or $settings['gallery-Enable'] !== 'false') { ?>
-					<div id="tab-2" class="tab">
-						<article>
-							<div class="text-section">
-								<h1 style="display:inline-block;">Gallery</h1>
-								<?php if(isloggedin() == true) { ?>
-									<div style="float:right;margin-left:10px;margin-right:10px;">
-										<form id="upld" style="" action="./?act=uploadgal" method="POST" enctype="multipart/form-data">
-											<input type="file" name="image"/>
-											<input type="hidden" name="active" value="tab-2"/>
-											<input id="upldbttn" value="Upload" type="submit"/>
-										</form>
-										<span id="placemrk"></span>
-									</div>
-									<img style='display:none;' src='dpnd/images/upload.gif'/>
-									<h1 id="upldh1" style="display:inline-block;float:right;">Upload</h1>
-								<?php } ?>
-							</div>
-							<ul class="states">
-								<?php
-								if(!empty($_GET['message']))
-								{
-									if ($_GET['message'] == 'Success')
-									{
-										echo '<li class="succes">Your photo has been uploaded to the gallery!</li>';
-									}
-									else
-									{
-										echo '<li class="error">Image Upload Issue : '.$_GET['message'].'</li>';
-									}
-								}
-								if(isset($_GET['deleted']))
-								{
-									echo '<li class="succes">Your image was permanently removed from the server.</li>';
-								}
-								?>
-							</ul>
-						</article>
-						<center id="gall">
-						</center>
-						<div class="animation_image" align="center">
-							<img style="display:none;" src="dpnd/images/ajax.gif"><br>
-							<button id="loadmoreimages">Load More...</button>
-						</div>
-					</div>
-				<?php } ?>
-                <?php if(!isset($settings['plugins-enabled']) or $settings['plugins-enabled'] !== 'false') { ?>
+                <?php } ?>
+                <?php if(!isset($settings['gallery-Enable']) or $settings['gallery-Enable'] !== 'false') { ?>
+                    <div id="tab-2" class="tab">
+                        <article>
+                            <div class="text-section">
+                                <h1 style="display:inline-block;">Gallery</h1>
+                                <?php if(isloggedin() == true) { ?>
+                                    <div style="float:right;margin-left:10px;margin-right:10px;">
+                                        <form id="upld" style="" action="./?act=uploadgal" method="POST" enctype="multipart/form-data">
+                                            <input type="file" name="image"/>
+                                            <input type="hidden" name="active" value="tab-2"/>
+                                            <input id="upldbttn" value="Upload" type="submit"/>
+                                        </form>
+                                        <span id="placemrk"></span>
+                                    </div>
+                                    <img style='display:none;' src='dpnd/images/upload.gif'/>
+                                    <h1 id="upldh1" style="display:inline-block;float:right;">Upload</h1>
+                                <?php } ?>
+                            </div>
+                            <ul class="states">
+                                <?php
+                                if(!empty($_GET['message']))
+                                {
+                                    if ($_GET['message'] == 'Success')
+                                    {
+                                        echo '<li class="succes">Your photo has been uploaded to the gallery!</li>';
+                                    }
+                                    else
+                                    {
+                                        echo '<li class="error">Image Upload Issue : '.$_GET['message'].'</li>';
+                                    }
+                                }
+                                if(isset($_GET['deleted']))
+                                {
+                                    echo '<li class="succes">Your image was permanently removed from the server.</li>';
+                                }
+                                ?>
+                            </ul>
+                        </article>
+                        <center id="gall">
+                        </center>
+                        <div class="animation_image" align="center">
+                            <img style="display:none;" src="dpnd/images/ajax.gif"><br>
+                            <button id="loadmoreimages">Load More...</button>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php if(!isset($settings['apps-enabled']) or $settings['apps-enabled'] !== 'false') { ?>
                     <div id="tab-3" class="tab">
                         <article>
                             <div class="text-section">
-                                <h1>Plugins</h1>
-                                <p>More server applications and features.</p>
+                                <h1>Apps</h1>
+                                <p>Extra mcDash features.</p>
                             </div>
                             <ul class="states">
                             </ul>
@@ -216,17 +220,19 @@ Need help? Message me on skype, (dylan.bickerstaff).
                                 }
                                 ?>
                             </ul>
-                            <?php if(isloggedin()) { echo '
-                              <center>
-                                <form action="./?act=feedpost" method="post">
-                                  <input type="hidden" name="act" value="feedpost">
-                                  <textarea name="postcon" class="feedformin" placeholder="                                                       Hey '.username().', Tell us what\'s up."></textarea>
-                                  <button>Share</button>
-                                </form>
-                              </center>
-                              <br><br>
-                              '; } ?>
-                            <?php
+                            <?php if(isloggedin())
+                                {
+                                   echo '
+                                   <center>
+                                     <form action="./?act=feedpost" method="post">
+                                       <input type="hidden" name="act" value="feedpost">
+                                       <textarea name="postcon" class="feedformin" placeholder="                                                       Hey '.username().', Tell us what\'s up."></textarea>
+                                       <button>Share</button>
+                                     </form>
+                                   </center>
+                                   <br><br>
+                                   '; 
+                                }
                                 showfeed();
                             ?>
                         </article>
@@ -290,26 +296,28 @@ Need help? Message me on skype, (dylan.bickerstaff).
     <aside id="sidebar">
         <a href="./"><img class="logo" width="50" height="50" src="<?php if(!empty($settings['SmallLogo'])) {echo $settings['SmallLogo'];} else {echo './dpnd/images/logo.png';} ?>"></img></a>
         <ul class="tabset buttons">
+            <?php if(!isset($settings['enableDash']) or $settings['enableDash'] !== 'false') { ?>
             <li id="DashBoard" <?php echo amIactive('tab-1') ?>>
                 <a href="#tab-1" class="ico1"><span>Dashboard</span><em></em></a>
                 <span class="tooltip"><span>Dashboard Widgets</span></span>
             </li>
-			<?php if(!isset($settings['gallery-Enable']) or $settings['gallery-Enable'] !== 'false') { ?>
-				<li id="LiveGalleryButton" <?php echo amIactive('tab-2') ?>>
-					<a href="#tab-2" class="ico2"><span>Gallery</span><em></em></a>
-					<span class="tooltip"><span>Gallery</span></span>
-				</li>
-			<?php } ?>
+            <?php } ?>
+            <?php if(!isset($settings['gallery-Enable']) or $settings['gallery-Enable'] !== 'false') { ?>
+                <li id="LiveGalleryButton" <?php echo amIactive('tab-2') ?>>
+                    <a href="#tab-2" class="ico2"><span>Gallery</span><em></em></a>
+                    <span class="tooltip"><span>Gallery</span></span>
+                </li>
+            <?php } ?>
             <?php if(!isset($settings['feed-enabled']) or $settings['feed-enabled'] !== 'false') { ?>
-                <li <?php echo amIactive('tab-4') ?>>
+                <li id="UserFeedButton" <?php echo amIactive('tab-4') ?>>
                     <a href="#tab-4" class="ico3"><span>Feed</span><em></em></a>
                     <span class="tooltip"><span>Feed</span></span>
                 </li>
             <?php } ?>
-            <?php if(!isset($settings['plugins-enabled']) or $settings['plugins-enabled'] !== 'false') { ?>
+            <?php if(!isset($settings['apps-enabled']) or $settings['apps-enabled'] !== 'false') { ?>
                 <li <?php echo amIactive('tab-3') ?>>
-                    <a href="#tab-3" class="ico4"><span>Plugins</span><em></em></a>
-                    <span class="tooltip"><span>Plugins</span></span>
+                    <a href="#tab-3" class="ico4"><span>Apps</span><em></em></a>
+                    <span class="tooltip"><span>Apps</span></span>
                 </li>
             <?php } ?>
             <?php if(!isset($settings['liveChat-enabled']) or $settings['liveChat-enabled'] !== 'false') { ?>

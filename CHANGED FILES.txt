@@ -1,0 +1,45 @@
+widgets/New Players Registered on mcDash/index.tpl
+
+dpnd/functions.lib.php
+
+dpnd/css/all.css
+
+dpnd/shaledatamanager.lib.php
+
+dpnd/act/3duser.tpl
+
+dpnd/act/admin.tpl
+
+widgets/Server Ban List/index.tpl
+
+dpnd/css/3duser.css
+
+plugins/ folder renamed to apps/
+
+dpnd/css/admin.css
+
+dpnd/css/ie.css DELETE
+
+widgets/Server MOTD/*
+
+dpnd/js/jquery.admin.js
+
+dpnd/css/login.css
+
+dpnd/act/delete.tpl
+
+dpnd/act.lib.php RENAMED/UPDATED dpnd/act.lib.tpl
+
+dpnd/act/deletefeedcomment.tpl
+
+index.php
+
+RENAMED/UPDATED dpnd/upd8r.lib.php -> dpnd/pakm.lib.php
+
+widgets/Lag O Meter/index.tpl
+
+dpnd/js/jquery.main.js
+
+dpnd/act/feeddelete.tpl
+
+dpnd/version

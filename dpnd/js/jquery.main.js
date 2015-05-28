@@ -2793,4 +2793,103 @@ $(document).ready(function () {
         });
         return false;
     }
+    
+    //UserFEED Commenting AND liking stuff
+    $(".likeFeed").on('submit', function() {
+        var dis = this;
+        $.ajax({
+            type: 'GET',
+            url: './',
+            data: $(this).serialize(),
+            success: function (response) {
+                $(dis).find("button").text(response);
+            }
+        });
+    });
+    
+    $(".sallcomm").click(function() {
+        var dis = this;
+        $.ajax({
+            type: 'GET',
+            url: './?act=viewfeedcomments&id=' + $(dis).attr('id'),
+            success: function (response) {
+                $(dis).parent().html(response);
+                $.resetIframeMagPopup();
+            }
+        });
+    });
+    
+    $(".commentFeed").on("keydown", function (e) {
+        if (e.which == 13) {
+            submitFormComFeed(this);
+        }
+    });
+    
+    $(".commentFeed").on('submit', function() {
+        submitFormComFeed(this);
+    });
+    
+    function submitFormComFeed(dis) {
+        $.ajax({
+            type: 'POST',
+            url: './?act=feedcomment',
+            data: $(dis).serialize(),
+            success: function (response) {
+                if(response == "denied")
+                {
+                    $(dis).find("button").text("Error...");
+                    $(dis).find("textarea").val("Please log in to comment..."); 
+                }
+                else if(response == "missing")
+                {
+                    $(dis).find("button").text("Comment");
+                    $(dis).find("textarea").attr("placeholder", "Please write a comment first...");
+                    $(dis).find("button,textarea").removeAttr("disabled");
+                }
+                else if(response == "doesnotexist")
+                {
+                    $(dis).find("button").text("Error...");
+                    $(dis).find("textarea").val("This post cannot be found at this time..."); 
+                }
+                else if(response == "")
+                {
+                    if ( $(dis).prev("#commcontain").css('display') == 'none' ){
+                        $(dis).prev("#commcontain").hide();
+                        $(dis).prev("#commcontain").fadeIn(300);
+                    }
+                    $.ajax({url: "./?act=viewfeedcomments&id=" + $(dis).find("input").val(), success: function(result){
+                        $(dis).prev("#commcontain").html(result);
+                        $.resetIframeMagPopup();
+                    }});
+                    $(dis).find("textarea").val("");
+                    $(dis).find("button").text("Comment");
+                    $(dis).find("button,textarea").removeAttr("disabled");
+                }
+                else
+                {
+                    $(dis).find("button").text("Error...");
+                    $(dis).find("textarea").val("Unknown error occurred..."); 
+                }
+            },
+            beforeSend: function () {
+                $(dis).find("button").text("Posting...");
+                $(dis).find("button,textarea").attr("disabled", "disabled");
+            }
+        });
+    }
+    
+    var feedInter = setInterval(function() {
+        if ($("#UserFeedButton").hasClass("active")) {
+            $('.feed').each(function() {
+                var dis = this;
+                $.ajax({url: "./?act=viewfeedcomments&amount=3&id=" + $(dis).attr("cid"), success: function(result){
+                    $(dis).find("#commcontain").append(result);
+                    $.resetIframeMagPopup();
+                }});
+            });
+            clearInterval(feedInter);
+        }
+    });
+    
+    
 });

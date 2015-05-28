@@ -1,12 +1,12 @@
 <?php
 //Version 1.0 Deleting Post - krisdb2009
 $feed = loadDB('feed');
-if(isset($feed[$_GET['id']]['owner']) and ((username() == $feed[$_GET['id']]['owner']) or (username() == $AdminUsername)) and !isset($_POST['confirm']))
+if(isset($feed[$_GET['pid']]['comments'][$_GET['cid']]['owner']) and ((username() == $feed[$_GET['pid']]['comments'][$_GET['cid']]['owner']) or (username() == $AdminUsername)) and !isset($_POST['confirm']))
 {
     echo '
     <br>
     <link rel="stylesheet" type="text/css" href="dpnd/css/login.css">
-    <h1>Are you sure you want to delete this post?</h1>
+    <h1>Are you sure you want to delete this comment?</h1>
     <center>
     <form id="window" method="post">
     <input id="hover" type="submit" value="Yes" name="confirm"/><br>
@@ -15,10 +15,10 @@ if(isset($feed[$_GET['id']]['owner']) and ((username() == $feed[$_GET['id']]['ow
     </center>
     ';
 }
-elseif(isset($_POST['confirm']) and $_POST['confirm'] == 'Yes' and isloggedin() and ((username() == $feed[$_GET['id']]['owner']) or (username() == $AdminUsername)))
+elseif(isset($_POST['confirm']) and $_POST['confirm'] == 'Yes' and isloggedin() and ((username() == $feed[$_GET['pid']]['comments'][$_GET['cid']]['owner']) or (username() == $AdminUsername)))
 {
-    $feed[$_GET['id']] = null;
-    unset($feed[$_GET['id']]);
+    $feed[$_GET['pid']]['comments'][$_GET['cid']] = null;
+    unset($feed[$_GET['pid']]['comments'][$_GET['cid']]);
     putDB($feed,'feed');
     echo '
         <br>
@@ -36,5 +36,5 @@ elseif(isset($_POST['confirm']) and $_POST['confirm'] == 'Yes' and isloggedin() 
 }
 else
 {
-    echo '<center><h1 color="white">Session Timeout. Please Login</h1></center>';
+    echo '<center><h1 style="color:white">Session Timeout. Please Login</h1></center>';
 }

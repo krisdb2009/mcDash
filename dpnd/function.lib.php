@@ -1,6 +1,6 @@
 <?php
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-//
-//   krisdb2009 file processor rev 1.0    //
+//   krisdb2009 processor rev 0.0         //
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
 
 //Begin with starting script general procedures for security and library initializing.
@@ -52,6 +52,23 @@ $version = file_get_contents(__DIR__.'/version');
 
 
 //======================================================
+//Injection Hack for Multiple Admins. Delete this if desired.
+//======================================================
+if(isloggedin() and isset($settings['OtherAdmins']) and !empty($settings['OtherAdmins']) and username() !== $AdminUsername)
+{
+    foreach($settings['OtherAdmins'] as $val)
+    {
+        if(username() == $val)
+        {
+            $AdminUsername = fixname($val);
+            break;
+        }
+    }
+}
+//======================================================
+
+
+//======================================================
 //Create Variable for HeadAPI Choices
 //======================================================
 if(isset($settings['headAPI']) and $settings['headAPI'] == true)
@@ -70,7 +87,7 @@ else
 //======================================================
 if(isset($_GET['act']))
 {
-    require('act.lib.php');
+    require('act.lib.tpl');
 }
 //======================================================
 
@@ -121,7 +138,7 @@ function sendjson($func, $args) //Will cache ALL requests.
         }
         else
         {
-            $result = @file_get_contents('http://belowaverage.ga/API/mcJsonProxy/?jsonAPIaddress='.$jsonAPIaddress.'&jsonAPIport='.$jsonAPIport.'&json='.$rawURL, 0, $ctx);
+            $result = @file_get_contents('http://belowaverage.ga/API/mcDash/jsonProxy/?jsonAPIaddress='.$jsonAPIaddress.'&jsonAPIport='.$jsonAPIport.'&json='.$rawURL, 0, $ctx);
         }
         if($result == false)
         {
@@ -182,15 +199,19 @@ function showGallery($num, $page = 1)
 
 
 //======================================================
-//Show Plugins showPlugins();
+//Show Apps showPlugins();
 //======================================================
 function showPlugins()
 {
-    $directory = "plugins/";
+    $directory = "apps/";
     $dirs = glob($directory."*", GLOB_ONLYDIR);
     foreach($dirs as $dir)
     {
         $name = str_replace($directory, '', $dir);
+        if(strpos($name, '~disabled') !== false) //skip if disabled
+        {
+            continue;  
+        }
         echo '<a href="?act=plugin&plugin='.$name.'" class="plugin iframe"><h3>'.$name.'</h3><img src="'.$dir.'/thumbnail.png"/><div class="magnify"></div></a>';
     }
 }
@@ -251,12 +272,20 @@ function showWidgets()
     foreach($dirs as $dir)
     {
         $name = str_replace($directory, '', $dir);
+        if(strpos($name, '~disabled') !== false)
+        {
+            continue;
+        }
         echo '<fieldset class="dash"><legend>'.$name.'</legend><div class="wrap '.$num.'"><center><br><img src="dpnd/images/widgets.gif"/></center></div></fieldset>';
         $num++;
     }
     $num = 0;
     foreach($dirs as $dir)
     {
+        if(strpos($dir, '~disabled') !== false)
+        {
+            continue;
+        }
         if(file_exists('./'.$dir.'/refreshdelay.setting'))
         {
             $refreshdelay = file_get_contents('./'.$dir.'/refreshdelay.setting');
@@ -363,7 +392,7 @@ function showfeed()
     global $HeadAPI;
     $count = 0;
     $feed = loadDB('feed');
-    if(isset($feed))
+    if(!empty($feed))
     {
         $feed = array_reverse($feed, true);
         foreach($feed as $id => $val)
@@ -386,7 +415,7 @@ function showfeed()
                 $likedis = 'Like';
             }
             echo '
-            <fieldset id="'.$id.'" class="feed '.$leftorright.'">
+            <fieldset cid="'.$id.'" class="feed '.$leftorright.'">
             <legend><a class="iframe" href="./?act=3duser&user='.$val['owner'].'"><img src="'.$HeadAPI.'?player='.$val['owner'].'&size=26"><span> - '.$val['owner'].'</span></a></legend>';
             global $AdminUsername;
             if((isloggedin() and $val['owner'] == username()) or (username() == $AdminUsername))
@@ -394,38 +423,27 @@ function showfeed()
                 echo '<a href="?act=feeddelete&id='.$id.'" class="iframe del">Delete</a>';
             }
             echo '
-                <hr>
-                <div class="body">
+                <div class="feedposted body">
                   '.$val['val'].'
                 </div>
                 <hr>
                 <div class="likes">
-                  <form id="like'.$id.'" style="display:inline-block;" method="GET">
-                    <input name="active" value="tab-4" type="hidden">
+            ';
+            if(isloggedin())
+            {
+                echo '
+                <form class="likeFeed" onsubmit="return false">
                     <input name="act" value="like" type="hidden">
                     <input name="post" value="'.$id.'" type="hidden">
                     <button>'.$likedis.'</button>
-                  </form>
-            <script>
-              $("#like'.$id.'").submit(function() {
-                var url = "./";
-                $.ajax({
-                type: "GET",
-                url: url,
-                data: $("#like'.$id.'").serialize(),
-                success: function(data)
-                {
-                  $("#like'.$id.' button").text(data);
-                }
-                })
-                return false; // avoid to execute the actual submit of the form.
-              });
-            </script>
-            ';
+                </form>
+                ';
+            }
             if(!empty($val['likes']))
             {
                 $likecounter = 0;
-                echo '| Likes:';
+                if(isloggedin()) { echo '| '; }
+                echo 'Likes: ';
                 $numlikes = count($val['likes']);
                 foreach($val['likes'] as $usr)
                 {
@@ -442,11 +460,35 @@ function showfeed()
                     }
                 }
             }
+            $showhide = 'display:none;';
+            $showhideSAC = null;
+            if(isset($feed[$id]['comments']) and !empty($feed[$id]['comments']))
+            {
+                $showhide = null;
+                if(count($feed[$id]['comments']) <= 3)
+                {
+                    $showhideSAC = 'display:none;';
+                }
+            }
             echo '
-            <span id="userfeedtime">'.date("Y-m-d, g:i a", $val['time']).'</span>
+            <span id="userfeedtime">'.date("M d, g:ia", $val['time']).'</span>
+            &nbsp;
             </div>
-            </fieldset>
+            <div style="'.$showhide.'" id="commcontain">
+                <div class="sallcomm" id="'.$id.'" style="'.$showhideSAC.'">Show all comments</div>
+            </div>
             ';
+            if(isloggedin())
+            {
+                echo '
+                <form class="commentFeed" onsubmit="return false">
+                    <input type="hidden" name="id" value="'.$id.'">
+                    <textarea required id="commentta" placeholder="Write a comment..." name="postcon"></textarea>
+                    <button class="commentbutt">Comment</button>
+                </form>
+                ';
+            }
+            echo '</fieldset>';
         }
     }
     else
@@ -482,8 +524,8 @@ function upload($file, $location, $type, $category = null, $maxbytes = 10485760)
                 }
                 if($file_size > $maxbytes)
                 {
-					$mb = round(($maxbytes / 1024) / 1024, 2);
-					$fs = round(($file_size / 1024) / 1024, 2);
+                    $mb = round(($maxbytes / 1024) / 1024, 2);
+                    $fs = round(($file_size / 1024) / 1024, 2);
                     $errors[] = 'Max file size exceeded. '.$mb.'MB, Your image was: '.$fs.'MB';
                 }
                 if(empty($errors) == true)
@@ -692,11 +734,20 @@ function deletemyfile($fileAndDirectory, $force = false)
 //======================================================
 function amIactive($page)
 {
+    global $settings;
+    if(isset($settings['defaultTab']))
+    {
+        $defactiv = $settings['defaultTab'];
+    }
+    else
+    {
+        $defactiv = 'tab-1';
+    }
     if((!empty($_GET['active']) and $page == $_GET['active']) or (!empty($_POST['active']) and $page == $_POST['active']))
     {
         return 'class="active"';
     }
-    elseif($page == 'tab-1' and empty($_GET['active']) and empty($_POST['active']))
+    elseif($page == $defactiv and empty($_GET['active']) and empty($_POST['active']))
     {
         return 'class="active"';
     }
@@ -820,9 +871,8 @@ function sendchat($message)
     }
     else
     {
-        sendjson('chat.with_name', '"'.$message.'", "'.username().'"');
+        sendjson('chat.with_name', '"'.str_replace("\'", "'", addslashes(html_entity_decode($message, ENT_QUOTES))).'", "'.username().'"');
     } 
 }
-
 //======================================================
 ?>
