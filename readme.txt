@@ -1,12 +1,12 @@
 ##################################################################################
 Developers: krisdb2009, UmbraCharon
-Testers: nikkiluvzcoffee, noahalbers
+Testers: nikkiluvzcoffee
 
 Recommended PHP environment: 5.4 to 5.5 and up.
 
 Project name: mcDash
 Description: Allows members of a Minecraft server to share and view information about each other, themselves and the server.
-Version: 1.0
+Version: 1.1.0 (NOT READY)
 ##################################################################################
 
 #####
