@@ -1,0 +1,248 @@
+body {
+    background-color: transparent;
+    font: 15px/15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    -webkit-animation: fadeonload 0.3s;
+    animation: fadeonload 0.3s;
+}
+
+@-webkit-keyframes fadeonload {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+hr {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #fff;
+}
+
+@keyframes fadeonload {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#messagetile {
+    text-align: left;
+    max-width: 700px;
+    min-width: 400px;
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+    margin-top: -1px;
+    padding: 5px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+#messagetilelight {
+    text-align: left;
+    max-width: 700px;
+    min-width: 400px;
+    background-color: rgb(235, 235, 235);
+    border: 1px solid lightgray;
+    margin-top: -1px;
+    padding: 5px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+#logo {
+    width: 200px;
+    height: 200px;
+}
+
+#button2:hover {
+    color: black;
+    border: 1px solid black;
+}
+
+#button2:active {
+    -webkit-transition: 0s; /* For Safari 3.1 to 6.0 */
+    transition: 0s;
+    box-shadow: inset 0px 0px 10px gray;
+    background-color: whitesmoke;
+    border: 1px solid gray;
+}
+
+#chatico {
+    background: url(../images/sprite.png) no-repeat 9999px 0;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    background-position: -3px -291px;
+}
+
+#button2:hover > #chatico {
+    background-position: -3px -262px;
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
+#button2 {
+    -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
+    transition: .3s;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 20px;
+    outline: none;
+    font-size: 15px;
+    background-color: white;
+    margin: 5px;
+    width: auto;
+    text-decoration: none;
+    text-shadow: none;
+    color: gray;
+    padding: 5px;
+    display: inline-block;
+    /*box-shadow:0px 0px 5px lightgray;*/
+}
+
+.chatformin {
+    width: 500px;
+    height: 40px;
+    text-align: center;
+    border: 1px dashed #ccc;
+    outline: none;
+    color: black;
+    border-bottom-left-radius: 20px;
+    resize: none;
+    padding-top: 5px;
+    border-bottom-right-radius: 20px;
+}
+
+#ChatForm {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+#chatwd1 {
+    text-align: left;
+    overflow-y: hidden;
+    min-height: 100px;
+    max-height: 400px;
+    min-width: 400px;
+    max-width: 800px;
+}
+
+.flatmsg {
+    text-align: left;
+    width: 700px;
+    background-color: rgb(235, 235, 235);
+    border: 1px solid gray;
+    margin-top: -1px;
+    padding: 5px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+#messagetile:hover, #messagetilelight:hover {
+    background-image: url('../images/reply_hover.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-color: lightgray;
+}
+
+#window {
+    text-align: center;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    min-width: 350px;
+    max-width: 900px;
+    display: inline-block;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+input:not(.clear) {
+    -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
+    transition: .3s;
+    width: 335px;
+    text-align: center;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    outline: none;
+    font-size: 25px;
+    margin: 10px;
+}
+
+
+
+#button {
+    -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
+    transition: .3s;
+    width: 335px;
+    text-align: center;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    outline: none;
+    font-size: 25px;
+    margin: 10px;
+    padding: 5px;
+}
+
+input:focus {
+    background-color: beige;
+}
+
+h1, h5 {
+    text-align: center;
+    text-shadow: 0px 0px 3px black;
+}
+
+h1 {
+    color: white;
+}
+
+h5 {
+    color: lightgray;
+}
+
+a {
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover {
+    color: black;
+}
+
+#hover:hover {
+    color: white;
+    background-color: gray;
+}
+
+#vmuname {
+    color: rgb(0, 72, 94);
+    float: right;
+    margin-right: 10px;
+}
+
+* {
+    -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
+    transition: .3s;
+}
+
+#convos {
+    overflow-y: scroll;
+    border-top: 1px solid lightgray;
+    max-height: 200px;
+}
+
+.head {
+    vertical-align: middle;
+}

@@ -1,0 +1,9 @@
+Our functions library was written by Below Average.
+
+The password hashing library was developed by Anthony Ferrara.
+
+The database manager was developed by yours truly. (krisdb2009).
+
+Some of the theme stylesheets was written by AsifAleem84.
+
+And the thumbnail library was developed by Peter Chylewski.
