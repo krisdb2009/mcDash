@@ -1,5 +1,6 @@
 *.dat
 config.php
+/dpnd/DB/*
 
 # Windows image file caches
 Thumbs.db
