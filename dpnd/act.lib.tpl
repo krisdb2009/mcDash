@@ -196,7 +196,7 @@ if($_GET['act'] == 'getchat')
         {
             foreach($chatstream[0]->success as $chatline)
             {
-                echo '<div id="scomment"><a href="?act=3duser&user=' . $chatline->player . '" class="iframe" title="View Profile"><img src="' . $HeadAPI . '?size=16&player=' . $chatline->player . '"></a><span>&lt;'.date("M d&#183;g:ia", $chatline->time).'&#183;</span><a href="?act=3duser&user=' . $chatline->player . '" class="iframe" title="View Profile">' . $chatline->player . '</a><span>&gt;</span> ' . $chatline->message . '</div>';
+                echo '<div id="scomment"><a href="?act=3duser&user='.$chatline->player.'" class="iframe" title="View Profile"><img src="'.$HeadAPI.'?size=16&player='.$chatline->player.'"></a><span>&lt;'.date("M d&#183;g:ia", $chatline->time).'&#183;</span><a href="?act=3duser&user='.$chatline->player.'" class="iframe" title="View Profile">'.$chatline->player.'</a><span>&gt;</span> '.$chatline->message.'</div>';
             }
             echo '<script>$.resetIframeMagPopup();</script>';
         }

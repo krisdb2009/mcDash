@@ -8,6 +8,8 @@ dpnd/shaledatamanager.lib.php
 
 dpnd/act/3duser.tpl
 
+dpnd/act/viewmessages.tpl
+
 dpnd/act/admin.tpl
 
 widgets/Server Ban List/index.tpl

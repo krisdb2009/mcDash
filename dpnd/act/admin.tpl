@@ -173,6 +173,7 @@ function configPack($loc)
     textForm('BigLogo','<b>Big Logo URL</b> - Default: (./dpnd/images/logo.png)');
     textForm('SmallLogo','<b>Small Logo URL</b> - Default: (./dpnd/images/large-logo.png)');
     textForm('Banner','<b>Banner URL</b> - Default: (../images/bg-controls.png)');
+    listForm('BungeeServers','<center><b>Additional Servers</b>:<br> (FriendlyName;ServerIP:Port) Example: "Hub Server;1.2.3.4:25565"<br> <i>";" is used as a seperator.<br>All servers must use the same jsonAPI username and password that is set up in the config.php.<br>The original (Default) server that is setup in the config.php will be named "Main Server"</i></center>');
     listForm('BannerLinks','<center><b>Banner Links</b>:<br> Example: "Homepage;http://belowaverage.ga/"<br> <i>";" is used as a seperator.</i></center>');
     listForm('OtherAdmins','<center><b>Additional Admins</b>:<br> Give users the same permissions<br>on mcDash as you.<br></center>');
     textForm('Title','<b>Website Tab Title</b> - Default: (mcDash)');

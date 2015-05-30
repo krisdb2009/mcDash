@@ -254,3 +254,23 @@ a:hover {
 .head {
     vertical-align: middle;
 }
+#scomment img {
+    width:16px;
+    height:16px;
+    vertical-align:middle;
+}
+#scomment a {
+    color:rgb(0, 192, 192);
+    margin-bottom:5px;
+    font-size:12px;
+}
+#scomment span {
+    color:gray;
+}
+#scomment {
+    color:black;
+    font-size:12px;
+}
+#scomment a {
+	text-decoration:none;
+}

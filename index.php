@@ -72,34 +72,39 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
                     </ul>
                 </nav>
                 <div class="profile-box">
-            <span class="profile">
-              <?php
-              if(isloggedin() == true)
-              {
-                  echo '
-                    <a href="./?act=3duser&user='.username().'" class="section iframe">
-                      <img class="image" src="'.$HeadAPI.'?player='.username().'&size=26" alt="image description" width="26" height="26" />
-                      <span class="text-box">
-                        Welcome
-                        <strong class="name">'.username().'</strong>
-                      </span>
-                    </a>
-                    ';
-              }
-              else
-              {
-                  echo '
-                    <a href="./?act=login" class="section iframe">
-                      <img class="image" src="'.$HeadAPI.'?player=steve&size=26" alt="image description" width="26" height="26" />
-                      <span class="text-box">
-                        Welcome Stranger!
-                        <strong class="name">Login / Register</strong>
-                      </span>
-                    </a>
-                    ';
-              }
-              ?>
-            </span>
+                    <span class="profile">
+                        <a href="" class="switchservers iframe">
+                            <h3 style="color:black;">Switch Servers</h3>
+                        </a>
+                    </span>
+                    <span class="profile">
+                        <?php
+                            if(isloggedin() == true)
+                            {
+                                echo '
+                                <a href="./?act=3duser&user='.username().'" class="section iframe">
+                                    <img class="image" src="'.$HeadAPI.'?player='.username().'&size=26" alt="image description" width="26" height="26" />
+                                    <span class="text-box">
+                                        Welcome
+                                        <strong class="name">'.username().'</strong>
+                                    </span>
+                                </a>
+                                ';
+                            }
+                            else
+                            {
+                                echo '
+                                <a href="./?act=login" class="section iframe">
+                                    <img class="image" src="'.$HeadAPI.'?player=steve&size=26" alt="image description" width="26" height="26" />
+                                    <span class="text-box">
+                                        Welcome Stranger!
+                                        <strong class="name">Login / Register</strong>
+                                    </span>
+                                </a>
+                                ';
+                            }
+                        ?>
+                    </span>
                     <a href="<?php if(isloggedin() == true)  echo './?act=logout'; else echo './?act=login'; ?>" class="btn-on iframe">log</a>
                 </div>
             </div>

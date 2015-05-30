@@ -20,7 +20,7 @@ if (isset($_GET['convoid']) and isset($_GET['justconvo']))
 
         foreach($chatdata['messages'] as $message)
         {
-            echo '['.$message['time'].'] <a href="./?act=3duser&user='.$message['from'].'"><img class="head" src="'.$HeadAPI.'?player='.$message['from'].'&size=16"></a> <<span style="color:rgb(0, 183, 190);">' . $message['from'] . '</span>> ' . $message['message'] . '<br />';
+            echo '<div id="scomment"><a href="?act=3duser&user='.$message['from'].'" class="iframe" title="View Profile"><img src="'.$HeadAPI.'?size=16&player=' . $message['from'] . '"></a><span>&lt;'.date("M d&#183;g:ia", $message['time']).'&#183;</span><a href="?act=3duser&user='.$message['from'].'" class="iframe" title="View Profile">' . $message['from'] . '</a><span>&gt;</span> '.$message['message'].'</div>';
         }
     }
     else
@@ -52,7 +52,7 @@ if (isset($_POST['chat']) and !empty($_POST['chat']) and myconvo($_GET['convoid'
     //
     $chatdata['messages'][$num]['message'] = strip_tags($_POST['chat']);
     $chatdata['messages'][$num]['from'] = username();
-    $chatdata['messages'][$num]['time'] = date('H:i');
+    $chatdata['messages'][$num]['time'] = time();
     putDB($chatdata, 'conversations\\' . $_GET['convoid']);
     exit;
 }
@@ -95,7 +95,7 @@ if(isset($_GET['convoid']) and !isset($_GET['all']) and !isset($_GET['all']))
                     }
                 }
                 $chatdata['messages'][$num]['from'] = 'Server';
-                $chatdata['messages'][$num]['time'] = date('H:i');
+                $chatdata['messages'][$num]['time'] = time();
                 $chatdata['messages'][$num]['message'] = username() . ' has left the chat.';
                 putDB($chatdata, 'conversations\\' . $_GET['convoid']);
             }
@@ -141,7 +141,7 @@ if(isset($_GET['convoid']) and !isset($_GET['all']) and !isset($_GET['all']))
                 $cnum = count($convo['messages']);
                 $cnum = $cnum + 1;
                 $convo['messages'][$cnum]['from'] = 'Server';
-                $convo['messages'][$cnum]['time'] = date('H:i');
+                $convo['messages'][$cnum]['time'] = time();
                 $convo['messages'][$cnum]['message'] = fixname($_POST['username']) . ' has been added to the chat by '.username();
                 sendjson('players.name.send_message', '"'.fixname($_POST['username']).'","'.username().' on our website has added you to their conversation! To read it click here: '.str_replace('&new','',URL()).'"');
                 array_push($convo['users'], fixname($_POST['username']));
@@ -298,7 +298,7 @@ elseif(isset($_GET['new'])) //elseif do this only if new isset
         $p2['conversations'][$num]['new'] = true;
         $convo['messages']['1']['message'] = username() . ' Started the chat and added ' . fixname($_POST['username']) . '. The subject is ' . $_POST['title'];
         $convo['messages']['1']['from'] = 'Server';
-        $convo['messages']['1']['time'] = date('H:i');
+        $convo['messages']['1']['time'] = time();
         $convo['users'] = array();
         array_push($convo['users'], username() , fixname($_POST['username']));
         putDB($p1, 'users\\' . username());
