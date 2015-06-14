@@ -1,13 +1,13 @@
-<p align="center"><img src="https://belowaverage.ga/Scripts/mcDash/dpnd/images/logo.png"></p><hr>
+<p align="center"><img src="https://belowaverage.org/Scripts/mcDash/dpnd/images/logo.png"></p><hr>
 
 mcDash is for anyone and everyone to get behind the scenes access to server statistics whenever.
 
-[Website](http://belowaverage.ga/mcDash) | [Bug Tracker](https://belowaverage.ga/mcDash/Issues%20&%20Bugs/)
+[Website](http://belowaverage.org/mcDash) | [Bug Tracker](https://belowaverage.org/mcDash/Issues%20&%20Bugs/)
 
 ###Features
 
-* Live server chat 
-* Stastistics (Customizable widgets) 
+* Live server chat
+* Stastistics (Customizable widgets)
 * Plugin System 
 * Player Stastistics 
 * Messaging system 
