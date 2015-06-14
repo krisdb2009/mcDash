@@ -19,7 +19,7 @@ if(!(isloggedin() and username() == $AdminUsername))
 //=========================//
 $FTPpackageRoot   = '/mcDash/packages/';
 $FTPupdateRoot    = '/mcDash/patches/';
-$FTPhost          = 'belowaverage.ga';
+$FTPhost          = 'belowaverage.org';
 $FTPuser          = 'anonymous';
 $FTPpass          = '';
 $PatchExtension   = 'zip'; //Must always be a zip format. Any extension will work.
