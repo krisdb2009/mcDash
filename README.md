@@ -2,7 +2,7 @@
 
 mcDash is for anyone and everyone to get behind the scenes access to server statistics whenever.
 
-[Website](http://belowaverage.org/mcDash) | [Bug Tracker](https://belowaverage.org/mcDash/Issues%20&%20Bugs/)
+[Website](http://belowaverage.org/mcDash) | [Bug Tracker](https://belowaverage.org/mcDash/Task%20Tracker/)
 
 ###Features
 
