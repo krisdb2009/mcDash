@@ -208,6 +208,7 @@ $(document).ready(function() {
     });
     $('.installList').click(function(){
         window.GlobIndexLocation = $(this).attr("location");
+        window.GlobIndexDomain = $(this).attr("apidomain");
         $("#dialog").dialog("open");
         $("#dialog").html( '<center><img src="./dpnd/images/ajax.gif"/></center>' );
         $.ajax({ 

@@ -52,6 +52,28 @@ $version = file_get_contents(__DIR__.'/version');
 
 
 //======================================================
+//Inject Hack server variables depending on the settings
+//======================================================
+if(isset($settings['BungeeServers']) and !empty($settings['BungeeServers']) and isset($_SESSION['server']))
+{
+    foreach($settings['BungeeServers'] as $rawdata)
+    {
+        if(explode(';',$rawdata)[0] == $_SESSION['server'])
+        {
+            $jsondata = explode(':',explode(';',$rawdata)[1]);
+            if(isset($jsondata[0]) and isset($jsondata[1]))
+            {
+                $jsonAPIaddress = $jsondata[0];
+                $jsonAPIport = $jsondata[1];
+            }
+            break;
+        }
+    }
+}
+//======================================================
+
+
+//======================================================
 //Injection Hack for Multiple Admins. Delete this if desired.
 //======================================================
 if(isloggedin() and isset($settings['OtherAdmins']) and !empty($settings['OtherAdmins']) and username() !== $AdminUsername)
@@ -77,7 +99,7 @@ if(isset($settings['headAPI']) and $settings['headAPI'] == true)
 }
 else
 {
-    $HeadAPI = 'https://belowaverage.ga/API/SKINHEAD/';
+    $HeadAPI = 'https://'.$baAPIdomain.'/API/SKINHEAD/';
 }
 //======================================================
 
@@ -102,6 +124,9 @@ function generate_jsonapi_key($username, $password, $api_method_or_stream_name)
 
 function sendjson($func, $args) //Will cache ALL requests.
 {
+    global $jsonAPIaddress;
+    global $jsonAPIport;
+    $index = md5($jsonAPIaddress.$jsonAPIport.$func.$args);
     $jcache = loadDB('cache\jsonapi');
     if(is_array($jcache))
     {
@@ -113,13 +138,14 @@ function sendjson($func, $args) //Will cache ALL requests.
             }
         }
     }
-    if(isset($jcache[$func.$args]) and ($jcache[$func.$args]['time'] > (time() - 1))) //time here
+    if(isset($jcache[$index]) and ($jcache[$index]['time'] > (time() - 1))) //time here
     {
-        $result = $jcache[$func.$args]['result'];
+        $result = $jcache[$index]['result'];
     }
     else
     {
-        require('config.php');
+        global $jsonAPIusername;
+        global $jsonAPIpassword;
         $ctx = stream_context_create(array('http' => array('timeout' => 5)));
         $rawURL = rawurlencode('
             [
@@ -138,13 +164,13 @@ function sendjson($func, $args) //Will cache ALL requests.
         }
         else
         {
-            $result = @file_get_contents('http://belowaverage.ga/API/mcDash/jsonProxy/?jsonAPIaddress='.$jsonAPIaddress.'&jsonAPIport='.$jsonAPIport.'&json='.$rawURL, 0, $ctx);
+            $result = @file_get_contents('http://'.$baAPIdomain.'/API/mcDash/jsonProxy/?jsonAPIaddress='.$jsonAPIaddress.'&jsonAPIport='.$jsonAPIport.'&json='.$rawURL, 0, $ctx);
         }
         if($result == false)
         {
-            if(isset($jcache[$func.$args]['result']))
+            if(isset($jcache[$index]['result']))
             {
-                $result = $jcache[$func.$args]['result'];
+                $result = $jcache[$index]['result'];
             }
             else
             {
@@ -153,8 +179,8 @@ function sendjson($func, $args) //Will cache ALL requests.
         }
         else
         {
-            $jcache[$func.$args]['time'] = time();
-            $jcache[$func.$args]['result'] = $result;
+            $jcache[$index]['time'] = time();
+            $jcache[$index]['result'] = $result;
             putDB($jcache, 'cache\jsonapi');
         }
     }
@@ -276,7 +302,7 @@ function showWidgets()
         {
             continue;
         }
-        echo '<fieldset class="dash"><legend>'.$name.'</legend><div class="wrap '.$num.'"><center><br><img src="dpnd/images/widgets.gif"/></center></div></fieldset>';
+        echo '<fieldset class="dash"><legend>'.$name.'</legend><div class="wrap wid'.$num.'"><center><br><img src="dpnd/images/widgets.gif"/></center></div></fieldset>';
         $num++;
     }
     $num = 0;
@@ -298,14 +324,14 @@ function showWidgets()
         echo '
       <script>
       $(document).ready(function() {
-      $(".'.$num.'").load("./?act=dash&widget='.urlencode($name).'");
-        function refresh'.$num.'() {
+      $(".wid'.$num.'").load("./?act=dash&widget='.urlencode($name).'");
+        function widrefresh'.$num.'() {
           if( $("#DashBoard").hasClass( "active" ))
           {
-            $(".'.$num.'").load("./?act=dash&widget='.urlencode($name).'");
+            $(".wid'.$num.'").load("./?act=dash&widget='.urlencode($name).'");
           }
         }
-        setInterval(refresh'.$num.', '.$refreshdelay.');
+        setInterval(widrefresh'.$num.', '.$refreshdelay.');
       });
       </script>
     ';

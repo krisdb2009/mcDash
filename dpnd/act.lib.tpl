@@ -35,7 +35,7 @@ if($_GET['act'] == 'logout')
           </audio>
           <script type="text/javascript">
             setTimeout(function() {
-            window.parent.window.location.href = \'./\';
+                window.parent.window.location.href = \'./\';
             }, 1500);
           </script>
         </center>
@@ -146,7 +146,7 @@ if($_GET['act'] == 'changepass')
     echo '
     <link rel="stylesheet" type="text/css" href="dpnd/css/login.css">
     <center><br>
-      <h1>Logging out</h1>
+      <h1>Logging out to change password...</h1>
       <img src="dpnd/images/load.gif"/></center>
       <audio autoplay>
         <source src="dpnd/images/logout.mp3" type="audio/mp3">
@@ -206,6 +206,60 @@ if($_GET['act'] == 'getchat')
         }
     }
     exit;
+}
+//
+
+//act=switchserver
+if($_GET['act'] == 'switchserver')
+{
+    if(isset($settings['BungeeServers']) and !empty($settings['BungeeServers']))
+    {
+        if(isset($_POST['confirm']))
+        {
+            session_start();
+            $_SESSION['server'] = $_POST['confirm'];
+            session_write_close();
+            echo '
+            <link rel="stylesheet" type="text/css" href="dpnd/css/login.css">
+            <center><br>
+              <h1>Switching to server: '.$_POST['confirm'].'</h1>
+              <img src="dpnd/images/load.gif"/></center>
+              <script type="text/javascript">
+                setTimeout(function() { 
+                    window.parent.$.magnificPopup.close();
+                    window.parent.$(".servername").text("'.$_POST['confirm'].'");
+                }, 1000);
+                setTimeout(function() { 
+                    document.write("");
+                    document.close();
+                }, 2000);
+              </script>
+            </center>
+            ';
+            exit;
+        }
+        echo '
+        <br>
+        <link rel="stylesheet" type="text/css" href="dpnd/css/login.css">
+        <h1>Select a server.</h1>
+        <center>
+        <form id="window" method="post">
+        <input id="hover" type="submit" value="Default" name="confirm"/><br>
+        ';
+        foreach($settings['BungeeServers'] as $rawdata)
+        {
+            $name = explode(';',$rawdata)[0];
+            if(isset($name))
+            {
+                echo '<input id="hover" type="submit" value="'.$name.'" name="confirm"/><br>';   
+            } 
+        }
+        echo '
+        </center>
+        </form>
+        ';
+        exit;   
+    }
 }
 //
 

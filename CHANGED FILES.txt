@@ -1,5 +1,9 @@
 widgets/New Players Registered on mcDash/index.tpl
 
+dpnd/act/register.tpl
+
+dpnd/css/jquery-ui.css
+
 dpnd/functions.lib.php
 
 dpnd/css/all.css
@@ -18,6 +22,12 @@ dpnd/css/3duser.css
 
 plugins/ folder renamed to apps/
 
+dpnd/images/bg-wrapper.png
+
+dpnd/images/bg-controls.png
+
+dpnd/images/sprite.png
+
 dpnd/css/admin.css
 
 dpnd/css/ie.css DELETE
@@ -29,6 +39,8 @@ dpnd/js/jquery.admin.js
 dpnd/css/login.css
 
 dpnd/act/delete.tpl
+
+THE CONFIG FILE NEEDS TO BE UPDATED / APPENDED TO ADDING THIS: $baAPIdomain = 'belowaverage.org';
 
 dpnd/act.lib.php RENAMED/UPDATED dpnd/act.lib.tpl
 

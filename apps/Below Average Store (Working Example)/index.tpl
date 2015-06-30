@@ -1,5 +1,5 @@
 <?php
-//Hi developers! Welcome agian. Here is a quick tutorial. One day there will be a guide in https://belowaverage.ga/mcDash/Wiki/
+//Hi developers! Welcome agian. Here is a quick tutorial.
 //Using jsonAPI you can make your plugins request or perform anything on this page: http://mcjsonapi.com/apidocs/
 // JsonString = sendjson('method.name', '"argument","array"');
 //Any other function used in mcDash is available to use in the functions.lib.php file.

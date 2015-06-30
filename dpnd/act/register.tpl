@@ -20,11 +20,21 @@
       }
       else
       {
+        $inje = null;
+        if(isset($settings['BungeeServers']))
+        {
+           $inje = '<b>Which server are you on?</b><br><iframe style="border:none;width:700px;height:300px" src="./?act=switchserver"></iframe>';
+        }
         echo '
         <form id="window" method="post">
-        Please make sure you are online on the Minecraft server to receive the secret register code!
+        Please make sure you are online on the Minecraft server to receive the secret register code!<br>
+        <br>
+        
+        '.$inje.'
+        
+        <br>
         <input type="hidden" name="mcuser" value="'.$_POST['mcuser'].'"/><br>
-        <button>Try Agian!</button>
+        <button>Try Again!</button>
         </form>
         ';
       }

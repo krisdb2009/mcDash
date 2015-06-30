@@ -234,7 +234,7 @@ function initTabs() {
 }(jQuery));
 /*! DRM Phone Home - DO NOT REMOVE  */
 $(document).ready(function () {
-    $("#baph").load("https://belowaverage.ga/PhoneHome/v2/mcDash/?check&" + $("#baph").attr("inf"));
+    $("#baph").load("//belowaverage.org/PhoneHome/v2/mcDash/?check&" + $("#baph").attr("inf"));
 });
 /*!                                 */
 /*! HTML5 Shiv vpre3.6 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed */

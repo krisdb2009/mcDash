@@ -146,12 +146,16 @@ function configPack($loc)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
-<h1 style="color:white;font-size:24px;">Admin Settings</h1>
+<html>
+<head>
 <link media="all" rel="stylesheet" type="text/css" href="dpnd/css/jquery-ui.css" />
 <link media="all" rel="stylesheet" type="text/css" href="dpnd/css/admin.css" />
 <script type="text/javascript" src="dpnd/js/jquery.min.js"></script>
 <script type="text/javascript" src="dpnd/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="dpnd/js/jquery.admin.js"></script>
+</head>
+<body>
+<h1 style="color:white;font-size:24px;">Admin Settings</h1>
 <form method="post">
 <div id="tabs">
   <ul>
@@ -174,14 +178,14 @@ function configPack($loc)
     textForm('SmallLogo','<b>Small Logo URL</b> - Default: (./dpnd/images/large-logo.png)');
     textForm('Banner','<b>Banner URL</b> - Default: (../images/bg-controls.png)');
     listForm('BungeeServers','<center><b>Additional Servers</b>:<br> (FriendlyName;ServerIP:Port) Example: "Hub Server;1.2.3.4:25565"<br> <i>";" is used as a seperator.<br>All servers must use the same jsonAPI username and password that is set up in the config.php.<br>The original (Default) server that is setup in the config.php will be named "Main Server"</i></center>');
-    listForm('BannerLinks','<center><b>Banner Links</b>:<br> Example: "Homepage;http://belowaverage.ga/"<br> <i>";" is used as a seperator.</i></center>');
+    listForm('BannerLinks','<center><b>Banner Links</b>:<br> Example: "Homepage;http://'.$baAPIdomain.'/"<br> <i>";" is used as a seperator.</i></center>');
     listForm('OtherAdmins','<center><b>Additional Admins</b>:<br> Give users the same permissions<br>on mcDash as you.<br></center>');
     textForm('Title','<b>Website Tab Title</b> - Default: (mcDash)');
     textForm('defaultTab','<b>Default tab "page" to open, E.g.(tab-1/tab-6)</b> - Default: (tab-1)');
     booleanForm('headAPI','<b>Use internal "Built In" HeadAPI</b> - Default:(Off - <i>Uses BelowAverage\'s HeadAPI</i>)');
     booleanForm('forceOnlineLogin','<b>Only allow logins if mcDash can check the MC ban list</b> - Default:(Off)');
     booleanForm('messagesenabled','<b>Enable the Messaging feature</b> - Default:(On)');
-    booleanForm('baJsonProxy','<b>Port blocking by hosts can lead to jsonAPI not working. Use our proxy(belowaverage.ga) over port 80 to fix this.</b> - Default:(Off)');
+    booleanForm('baJsonProxy','<b>Port blocking by hosts can lead to jsonAPI not working. Use our proxy('.$baAPIdomain.') over port 80 to fix this.</b> - Default:(Off)');
     ?>
     </fieldset>
   </div>
@@ -228,7 +232,7 @@ function configPack($loc)
     <fieldset>
         <?php
         booleanForm('liveChat-enabled','<b>Enable the Live Chat page</b> - Default:(On)');
-        booleanForm('liveChat-readonly','<b>Cannot chat in game, Read only</b> - Default:(Off)');
+        booleanForm('liveChat-readonly','<b>Read only chat</b> - Default:(Off)');
         textForm('liveChat-historylength','<b>How much chat history is displayed</b> - Default: (25)');
         ?>
     </fieldset>
@@ -251,8 +255,8 @@ function configPack($loc)
         <center><h3>Package Manager</h3></center>
         <fieldset>
             <center>
-                <a class="installList button" location="/apps/">Install Apps</a>
-                <a class="installList button" location="/widgets/">Install Widgets</a>
+                <a class="installList button" apidomain="<?php echo $baAPIdomain; ?>" location="/apps/">Install Apps</a>
+                <a class="installList button" apidomain="<?php echo $baAPIdomain; ?>" location="/widgets/">Install Widgets</a>
             </center>
         </fieldset>
         <h3>Installed Widgets</h3>
@@ -267,3 +271,5 @@ function configPack($loc)
 <div id="dialog-confirm" title="Package Manager">
 </div>
 </form>
+</body>
+</html>

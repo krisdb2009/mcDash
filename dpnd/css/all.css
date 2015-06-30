@@ -276,7 +276,7 @@ form {
 }
 
 #scomment a {
-    color:rgb(0, 192, 192);
+    color:rgb(41, 175, 229);
     margin-bottom:5px;
     font-size:12px;
 }
@@ -423,14 +423,14 @@ form {
 
 .buttons a {
     vertical-align: top;
-    background: #616a78;
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzYxNmE3OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzNDNkNGIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top, #616a78 0%, #343d4b 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #616a78), color-stop(100%, #343d4b));
-    background: -webkit-linear-gradient(top, #616a78 0%, #343d4b 100%);
-    background: -o-linear-gradient(top, #616a78 0%, #343d4b 100%);
-    background: -ms-linear-gradient(top, #616a78 0%, #343d4b 100%);
-    background: linear-gradient(to bottom, #616a78 0%, #343d4b 100%);
+    background: rgb(89,89,89); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(89,89,89,1) 0%, rgba(61,61,61,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(89,89,89,1)), color-stop(100%,rgba(61,61,61,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(89,89,89,1) 0%,rgba(61,61,61,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(89,89,89,1) 0%,rgba(61,61,61,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(89,89,89,1) 0%,rgba(61,61,61,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(89,89,89,1) 0%,rgba(61,61,61,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#595959', endColorstr='#3d3d3d',GradientType=0 ); /* IE6-9 */
     width: 75px;
     height: 40px;
     display: block;

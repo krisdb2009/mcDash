@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <!--
 Author: krisdb2009 from Below Average
-URL: http://belowaverage.ga/mcDash/
-Email: krisdb2009@belowaverage.ga
+URL: http://belowaverage.org/mcDash/
+Email: krisdb2009@belowaverage.org
 Credits: Please see <?php echo URL(); ?>/dpnd/About%20These%20Files.txt
 Project Name: mcDash
 Project Release Version: <?php echo $version; ?>
@@ -72,11 +72,16 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
                     </ul>
                 </nav>
                 <div class="profile-box">
-                    <span class="profile">
-                        <a href="" class="switchservers iframe">
-                            <h3 style="color:black;">Switch Servers</h3>
+                    <?php if(isset($settings['BungeeServers'])) { ?>
+                    <span class="profile" style="margin-right:7px;">
+                        <a href="./?act=switchserver" class="section iframe">
+                            <span class="text-box">
+                                Change server:
+                                <strong class="servername name"><?php if(isset($_SESSION['server'])) echo $_SESSION['server']; else echo 'Default'; ?></strong>
+                            </span>
                         </a>
                     </span>
+                    <?php } ?>
                     <span class="profile">
                         <?php
                             if(isloggedin() == true)
@@ -251,7 +256,7 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
                             </div>
                             <ul class="states">
                                 <?php
-                                if(isloggedin() == false)
+                                if(isloggedin() == false and (!isset($settings['liveChat-readonly']) or $settings['liveChat-readonly'] !== 'true')) //if islogged in and livechat-readonly is true
                                 {
                                     echo '<li class="warning">Warning: You must be logged in to send a message!</li>';
                                 }
