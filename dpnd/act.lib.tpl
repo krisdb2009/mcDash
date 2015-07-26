@@ -86,6 +86,14 @@ if($_GET['act'] == 'loadgal')
 }
 //
 
+//?act=loadgal
+if($_GET['act'] == 'getAPI')
+{
+    echo $baAPIdomain;
+    exit;
+}
+//
+
 //?act=loadusers
 if($_GET['act'] == 'loadusers')
 {

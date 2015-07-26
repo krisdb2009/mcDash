@@ -20,10 +20,10 @@ window['cache'] = {};
 function showPackPage(value)
 {
     $( "#dialog" ).html('<div class="packbutt"><img class="icon" src="dpnd/images/ajax.gif"> Loading...</div><div id="dbody"></div>');
-    $.getJSON("//belowaverage.ga/API/mcDash/packages/?json&location=" + window.GlobIndexLocation + "&id=" + value, function(data){
-        $( ".packbutt" ).html('<img class="icon" src="//belowaverage.ga/API/mcDash/packages/?icon&id=' + value + '&location=' + window.GlobIndexLocation + '">' + data.name + '<span onclick="promptInstall(&quot;' + window.GlobIndexLocation + '&quot;,&quot;' + value + '&quot;);" class="but">Install</span><span id="prop">' + data.timestamp + '<br>Downloads: ' + data.downloads + '</span>' + "<span>" + data.description + '</span>');
+    $.getJSON("//"+$.API+"/API/mcDash/packages/?json&location=" + window.GlobIndexLocation + "&id=" + value, function(data){
+        $( ".packbutt" ).html('<img class="icon" src="//'+$.API+'/API/mcDash/packages/?icon&id=' + value + '&location=' + window.GlobIndexLocation + '">' + data.name + '<span onclick="promptInstall(&quot;' + window.GlobIndexLocation + '&quot;,&quot;' + value + '&quot;);" class="but">Install</span><span id="prop">' + data.timestamp + '<br>Downloads: ' + data.downloads + '</span>' + "<span>" + data.description + '</span>');
     });
-    $.get("//belowaverage.ga/API/mcDash/packages/?page&location=" + window.GlobIndexLocation + "&id=" + value, function(data) {
+    $.get("//"+$.API+"/API/mcDash/packages/?page&location=" + window.GlobIndexLocation + "&id=" + value, function(data) {
         $( "#dialog #dbody" ).html(data);
     });
     $( "#dialog" ).append('<button onclick="shiftPack(0);">Go Back</button>');
@@ -48,7 +48,7 @@ function installPackage(location, value)
             });
         },
         error: function(jqXHR, exception) {
-            $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@belowaverage.ga or Skype: dylan.bickerstaff</h3>'); 
+            $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@'+$.API+' or Skype: dylan.bickerstaff</h3>'); 
         }                              
     });
     $("#dialog").on("dialogclose", function( event, ui ){
@@ -69,7 +69,7 @@ function reloadUI()
 }
 function drawCol(data, value)
 {
-    $( "#dialog [package='" + value +"']" ).html('<img class="icon" src="//belowaverage.ga/API/mcDash/packages/?icon&id=' + value + '&location=' + window.GlobIndexLocation + '">' + data.name + '<span onclick="promptInstall(&quot;' + window.GlobIndexLocation + '&quot;,&quot;' + value + '&quot;);" class="but">Install</span><span onclick="showPackPage(&quot;' + value + '&quot;);" class="but">Details</span><span id="prop">' + data.timestamp + '<br>Downloads: ' + data.downloads + '</span>' + "<span>" + data.description + '</span>');
+    $( "#dialog [package='" + value +"']" ).html('<img class="icon" src="//'+$.API+'/API/mcDash/packages/?icon&id=' + value + '&location=' + window.GlobIndexLocation + '">' + data.name + '<span onclick="promptInstall(&quot;' + window.GlobIndexLocation + '&quot;,&quot;' + value + '&quot;);" class="but">Install</span><span onclick="showPackPage(&quot;' + value + '&quot;);" class="but">Details</span><span id="prop">' + data.timestamp + '<br>Downloads: ' + data.downloads + '</span>' + "<span>" + data.description + '</span>');
 }
 function shiftPack(shiftamm)
 {
@@ -88,7 +88,7 @@ function shiftPack(shiftamm)
             }
             else
             {
-                $.getJSON("//belowaverage.ga/API/mcDash/packages/?json&location=" + window.GlobIndexLocation + "&id=" + value, function(data){
+                $.getJSON("//"+$.API+"/API/mcDash/packages/?json&location=" + window.GlobIndexLocation + "&id=" + value, function(data){
                     window['cache'][value] = data;
                     drawCol(data, value);
                 });
@@ -113,12 +113,15 @@ function shiftPack(shiftamm)
 }
 //Document Ready Actions
 $(document).ready(function() {
+    $.get("./?act=getAPI", function( data ) {
+        $.API = data;
+    });
     $(window).resize(function(){
         $( "#dialog" ).dialog( "option", "position", { my: "top", at: "top", of: window, minHeight: 'auto', resizable: false });
     });
     $('.runUpdater').click(function(){
         $( "#dialog-confirm" ).dialog( "open" );
-        $( "#dialog-confirm" ).html( '<center><h1>WARNING!</h1></center><span class="ui-icon ui-icon-alert" style="float:left; margin:0 5px 0 0;"></span><p class="warnp">If you modified any files in this script, the updater <b>can</b> change them back to default. Check <a target="_TOP" href="ftp://belowaverage.ga/mcDash/patches">The FTP server</a> for any modified files."</p>' );
+        $( "#dialog-confirm" ).html( '<center><h1>WARNING!</h1></center><span class="ui-icon ui-icon-alert" style="float:left; margin:0 5px 0 0;"></span><p class="warnp">If you modified any files in this script, the updater <b>can</b> change them back to default. Check <a target="_TOP" href="ftp://'+$.API+'/mcDash/patches">The FTP server</a> for any modified files."</p>' );
     });
     $('.checkUpdates').click(function(){
     $( "#dialog" ).dialog( "open" );
@@ -141,7 +144,7 @@ $(document).ready(function() {
                 });
             },
             error: function(jqXHR, exception) {
-                $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@belowaverage.ga or Skype: dylan.bickerstaff</h3>'); 
+                $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@'+$.API+' or Skype: dylan.bickerstaff</h3>'); 
             }          
         });
     });
@@ -185,7 +188,7 @@ $(document).ready(function() {
                             });
                         },
                         error: function(jqXHR, exception) {
-                            $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@belowaverage.ga or Skype: dylan.bickerstaff</h3>'); 
+                            $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@'+$.API+' or Skype: dylan.bickerstaff</h3>'); 
                         }                     
                     });
                 },
@@ -213,7 +216,7 @@ $(document).ready(function() {
         $("#dialog").html( '<center><img src="./dpnd/images/ajax.gif"/></center>' );
         $.ajax({ 
             type: 'GET', 
-            url: '//belowaverage.ga/API/mcDash/packages/', 
+            url: '//'+$.API+'/API/mcDash/packages/', 
             data: { package: '', location: window.GlobIndexLocation, list: '' }, 
             dataType: 'json',
             success: function(data) {
@@ -230,7 +233,7 @@ $(document).ready(function() {
                 }
             },
             error: function(jqXHR, exception) {
-                $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@belowaverage.ga or Skype: dylan.bickerstaff</h3>'); 
+                $( "#dialog" ).html( jqXHR.responseText + '<hr><h3>Please report this error to krisdb2009@'+$.API+' or Skype: dylan.bickerstaff</h3>'); 
             }        
         });
     });
