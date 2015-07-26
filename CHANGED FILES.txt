@@ -22,6 +22,12 @@ dpnd/css/3duser.css
 
 plugins/ folder renamed to apps/
 
+dpnd/js/3duser.jquery.js
+
+dpnd/js/jquery-ui.min.js   MINIFIED
+
+dpnd/js/jquery.min.js      MINIFIED - WHY WERE THEY NOT MINIFIED OMG
+
 dpnd/images/bg-wrapper.png
 
 dpnd/images/bg-controls.png
