@@ -1,6 +1,6 @@
 <?php
 //krisdb2009
-//Below Average//pakm//1.2//
+//Below Average//pakm//1.3//
 
 //API: ?update[&check]/[&version] - ?package[&name]&[&install]&[&location]/[&list]&[&location]
 
@@ -126,6 +126,7 @@ if(isset($_GET['update']) or (isset($_GET['update']) and isset($_GET['check'])))
     }
 
     $updates = discoverPackages($FTP, $FTPupdateRoot, $PatchExtension, $ScriptVersion);
+    asort($updates);
     array_push($log, 'Discovered '.count($updates).', Update(s)');
     foreach($updates as $update)
     {
