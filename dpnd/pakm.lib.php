@@ -137,7 +137,7 @@ if(isset($_GET['update']) or (isset($_GET['update']) and isset($_GET['check'])))
         foreach($updates as $update) //For every update copy and replace the files while runing the run me and echoing the changeme log
         {
             array_push($log, 'Starting update: '.$update);
-            if(ftp_get($FTP, "TEMPUPDATEFILES.zip", $FTPupdateRootRoot.$update.'.'.$PatchExtension, FTP_BINARY))
+            if(ftp_get($FTP, "TEMPUPDATEFILES.zip", $FTPupdateRoot.$update.'.'.$PatchExtension, FTP_BINARY))
             {
                 array_push($log, 'Downloaded update files');
             }
