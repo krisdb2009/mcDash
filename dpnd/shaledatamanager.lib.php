@@ -1,5 +1,5 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.4 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.5 // Unix Safe // Collision Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
@@ -27,18 +27,27 @@ function loadDB($path)
     if(file_exists($pathToDB.$path.$ext))
     {
         $file = fopen($pathToDB.$path.$ext, "r"); //File Path Open
-        if(flock($file, LOCK_SH)) //If can lock read.
+        $locked = true;
+        while($locked)
         {
-            return json_decode(decrypt(@fread($file, filesize($pathToDB.$path.$ext)), $crypt), true);
-            flock($file, LOCK_UN);
-            $success = true;
+            if(flock($file, LOCK_SH)) //If can lock read.
+            {
+                $data = json_decode(decrypt(@fread($file, filesize($pathToDB.$path.$ext)), $crypt), true);
+                flock($file, LOCK_UN);
+                $locked = false;
+            }
+            else
+            {
+                $locked = true;
+            }
         }
         fclose($file);
     }
     else
     {
-        return array();
+        $data = array();
     }
+    return $data;
 }
 
 //
