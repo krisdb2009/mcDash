@@ -32,7 +32,7 @@ function loadDB($path)
         {
             if(flock($file, LOCK_SH)) //If can lock read.
             {
-                $data = json_decode(decrypt(@fread($file, filesize($pathToDB.$path.$ext)), $crypt), true);
+                $data = json_decode(decrypt(@file_get_contents($pathToDB.$path.$ext), $crypt), true);
                 flock($file, LOCK_UN);
                 $locked = false;
             }
