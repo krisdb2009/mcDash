@@ -1,12 +1,11 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.5 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.6 // Unix Safe // Collision Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
 $crypt        = $DBencryptionKey; //16/24/32 Char long key
 $cryptEnabled = true;
 //
-
 //Clean path input because its dirty
 function cleanPath($path)
 {
@@ -16,7 +15,6 @@ function cleanPath($path)
     return $path;
 }
 //
-
 //$array = loadDB('asdf\asdf\asdf'); //Loads a database to an array
 function loadDB($path)
 {
@@ -49,9 +47,7 @@ function loadDB($path)
     }
     return $data;
 }
-
 //
-
 //putDB($array, 'asdf\asdf\asdf'); //Save a database from array (locks file when writing to prevent file deletion.)
 function putDB($arraydata, $path)
 {
@@ -81,9 +77,7 @@ function putDB($arraydata, $path)
         return true;
     }
 }
-
 //
-
 //dropDB('asdf\asdf\asdf'); //Delete the database
 function dropDB($path)
 {
@@ -93,7 +87,6 @@ function dropDB($path)
     @unlink($pathToDB.$path.$ext);
 }
 //
-
 //listDB('asdf\asdf\asdf'); //List the database's in a folder
 function listDB($path)
 {
@@ -106,19 +99,12 @@ function listDB($path)
     return $glob;
 }
 //
-
 //Future functions
-
 //cleanDB(); procedure to scan the whole database and remove whitespace and empty folders
-
 //
-
 //backupDB(); procedure to scan the whole database, and back it up in a zip file with the date stamped on it.
-
 //
-
 //restorebackupDB($date); procedure to find the latest backup, if $date is not given, and restore it.
-
 //Encryption Functionality
 function encrypt($data, $key)
 {
@@ -137,8 +123,7 @@ function encrypt($data, $key)
 //
 function decrypt($data, $key)
 {
-    global $cryptEnabled;
-    if($cryptEnabled)
+    if(base64_decode($data, true))
     {
         $data = base64_decode($data);
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
