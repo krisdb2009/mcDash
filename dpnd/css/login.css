@@ -64,8 +64,8 @@ hr {
 }
 
 #logo {
-    width: 200px;
-    height: 200px;
+    margin-top:30px;
+    max-width:100%;
 }
 
 #button2:hover {

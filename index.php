@@ -24,6 +24,7 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
 -->
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title><?php if(isset($settings['Title'])) echo $settings['Title']; else echo 'mcDash'; ?></title>
     <link media="all" rel="stylesheet" type="text/css" href="dpnd/css/all.css">
     <script type="text/javascript" src="dpnd/js/jquery.min.js"></script>
@@ -39,17 +40,12 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
     <!-- This script was designed by Below Average -->
 </head>
 <body>
-<div id="baph"
-     inf="<?php echo 'url='.URL().'&version='.$version.'&env='.PHP_OS.'&phpver='.phpversion().'&id='.$baphID; ?>">
-    <!-- Not Responding... --></div>
+<div id="baph" inf="<?php echo 'url='.URL().'&version='.$version.'&env='.PHP_OS.'&phpver='.phpversion().'&id='.$baphID; ?>"><!-- Not Responding... --></div>
 <div id="shade"></div>
 <div id="wrapper">
     <div id="content">
         <div class="c1">
-            <div style="<?php if (!empty($settings['Banner']))
-            {
-                echo 'background:url(./dpnd/images/glass.png), url('.$settings['Banner'].');';
-            } ?>" class="controls">
+            <div style="<?php if(!empty($settings['Banner'])) echo 'background:url(./dpnd/images/glass.png), url('.$settings['Banner'].');'; ?>" class="controls">
                 <nav class="links">
                     <ul>
                         <?php if (isloggedin() == true and (!isset($settings['messagesenabled']) or $settings['messagesenabled'] !== 'false')) { ?>
