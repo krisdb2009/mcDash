@@ -300,7 +300,7 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
         </div>
     </div>
     <aside id="sidebar">
-        <a href="./"><img class="logo" width="50" height="50" src="<?php if(!empty($settings['SmallLogo'])) {echo $settings['SmallLogo'];} else {echo './dpnd/images/logo.png';} ?>"></img></a>
+        <a href="./"><img class="logo" src="<?php if(!empty($settings['SmallLogo'])) {echo $settings['SmallLogo'];} else {echo './dpnd/images/logo.png';} ?>"></img></a>
         <ul class="tabset buttons">
             <?php if(!isset($settings['enableDash']) or $settings['enableDash'] !== 'false') { ?>
             <li id="DashBoard" <?php echo amIactive('tab-1') ?>>
@@ -350,7 +350,6 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
                 </li>
             </ul>
         <?php } ?>
-        <span class="shadow"></span>
     </aside>
 </div>
 </body>
