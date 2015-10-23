@@ -304,32 +304,39 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
         <ul class="tabset buttons">
             <?php if(!isset($settings['enableDash']) or $settings['enableDash'] !== 'false') { ?>
             <li id="DashBoard" <?php echo amIactive('tab-1') ?>>
-                <a href="#tab-1" class="ico1"><span>Dashboard</span><em></em></a>
+                <a href="#tab-1">
+                    <span class="glyphicon glyphicon-dashboard"></span>
+                </a>
                 <span class="tooltip"><span>Dashboard Widgets</span></span>
             </li>
             <?php } ?>
             <?php if(!isset($settings['gallery-Enable']) or $settings['gallery-Enable'] !== 'false') { ?>
                 <li id="LiveGalleryButton" <?php echo amIactive('tab-2') ?>>
-                    <a href="#tab-2" class="ico2"><span>Gallery</span><em></em></a>
+                    <a href="#tab-2"><span class="glyphicon glyphicon-picture"></span>
+                </a>
                     <span class="tooltip"><span>Gallery</span></span>
                 </li>
             <?php } ?>
             <?php if(!isset($settings['feed-enabled']) or $settings['feed-enabled'] !== 'false') { ?>
                 <li id="UserFeedButton" <?php echo amIactive('tab-4') ?>>
-                    <a href="#tab-4" class="ico3"><span>Feed</span><em></em></a>
+                    <a href="#tab-4">
+                        <span class="glyphicon glyphicon-bullhorn"></span>
+                    </a>
                     <span class="tooltip"><span>Feed</span></span>
                 </li>
             <?php } ?>
             <?php if(!isset($settings['apps-enabled']) or $settings['apps-enabled'] !== 'false') { ?>
                 <li <?php echo amIactive('tab-3') ?>>
-                    <a href="#tab-3" class="ico4"><span>Apps</span><em></em></a>
+                    <a href="#tab-3">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                    </a>
                     <span class="tooltip"><span>Apps</span></span>
                 </li>
             <?php } ?>
             <?php if(!isset($settings['liveChat-enabled']) or $settings['liveChat-enabled'] !== 'false') { ?>
                 <li id="LiveChatButton" <?php echo amIactive('tab-5') ?>>
-                    <a href="#tab-5" class="ico6">
-                        <span>Live Chat</span><em></em>
+                    <a href="#tab-5">
+                        <span class="glyphicon glyphicon-comment"></span>
                     </a>
                     <!--<span class="num">11</span>-->
                     <span class="tooltip"><span>Live Server Chat</span></span>
@@ -337,15 +344,19 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
             <?php } ?>
             <?php if(@$settings['players-enabled'] !== 'false') { ?>
                 <li id="LivePlayersButton" <?php echo amIactive('tab-6') ?>>
-                    <a href="#tab-6" class="ico7"><span>Players</span><em></em></a>
+                    <a href="#tab-6">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
                     <span class="tooltip"><span>Players</span></span>
                 </li>
             <?php } ?>
         </ul>
         <?php if(isloggedin()) { ?>
-            <ul class=" buttons">
+            <ul class="buttons">
                 <li>
-                    <a href="./?act=settings" class="ico8 iframe"><span>Player Settings</span><em></em></a>
+                    <a href="./?act=settings" class="iframe">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </a>
                     <span class="tooltip"><span>Player Settings</span></span>
                 </li>
             </ul>
