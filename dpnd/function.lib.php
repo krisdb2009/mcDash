@@ -213,7 +213,7 @@ function showGallery($num, $page = 1)
                     echo '<div style="display:inline-block;" title="Uploaded by: '.$image['user'].', on '.date("Y-m-d, g:i a", $image['time']).'"><span class="galThumb"><a href="dpnd/'.$image['path'].'"><h3>'.$image['user'].'</h3><img src="dpnd/thumb.lib.php?img=../dpnd/'.$image['path'].'&h=150" /><div class="magnify"></div></a></span>';
                     if(myfile($image['path']) == true)
                     {
-                        echo '<a href="?act=delete&delete='.$image['path'].'" class="iframe delete">X</a>';
+                        echo '<a href="?act=delete&delete='.$image['path'].'" class="iframe delete"><span class="glyphicon glyphicon-remove"></span></a>';
                     }
                     echo '</div>';
                 }
@@ -747,7 +747,6 @@ function deletemyfile($fileAndDirectory, $force = false)
             putDB($db, 'uploads');
             unlink(__DIR__.'/'.$fileAndDirectory);
             return 'Success';
-            break;
         }
     }
 }
