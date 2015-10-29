@@ -45,23 +45,23 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
 <div id="wrapper">
     <div id="content">
         <div class="c1">
-            <div style="<?php if(!empty($settings['Banner'])) echo 'background:url(./dpnd/images/glass.png), url('.$settings['Banner'].');'; ?>" class="controls">
+            <div <?php if(!empty($settings['Banner'])) echo 'style="background:url(./dpnd/images/glass.png), url('.$settings['Banner'].');"'; ?> class="controls">
                 <nav class="links">
                     <ul>
                         <?php if (isloggedin() == true and (!isset($settings['messagesenabled']) or $settings['messagesenabled'] !== 'false')) { ?>
                             <li>
-                                <a href="?act=viewmessages" class="ico1 iframe">Messaging <?php if(numberofnewmessages() !== 0) {echo '<span class="num">'.numberofnewmessages().'</span>';} ?></a>
+                                <a href="?act=viewmessages" class="iframe"><span class="glyphicon glyphicon-inbox"></span>Inbox<?php if(numberofnewmessages() !== 0) {echo '<span class="num">'.numberofnewmessages().'</span>';} ?></a>
                             </li>
                         <?php } ?>
                         <?php if($AdminUsername == username()) { ?>
-                            <li><a href="?act=admin" class="ico2 iframe">Admin Settings </a></li>
+                            <li><a href="?act=admin" class="iframe"><span class="glyphicon glyphicon-cog"></span>Admin Settings</a></li>
                         <?php } ?>
                         <?php if(isset($settings['BannerLinks']) and is_array($settings['BannerLinks']))
                         {
                             foreach($settings['BannerLinks'] as $link)
                             {
                                 $kvlink = explode(';', $link);
-                                echo '<li><a href="'.@$kvlink[1].'" class="ico3">'.@$kvlink[0].'</a></li>';
+                                echo '<li><a href="'.@$kvlink[1].'"><span class="glyphicon glyphicon-new-window"></span>'.@$kvlink[0].'</a></li>';
                             }
                         }
                         ?>
@@ -338,7 +338,6 @@ Need help? Message me on skype, (dylan.bickerstaff), Shoot me an email.
                     <a href="#tab-5">
                         <span class="glyphicon glyphicon-comment"></span>
                     </a>
-                    <!--<span class="num">11</span>-->
                     <span class="tooltip"><span>Live Server Chat</span></span>
                 </li>
             <?php } ?>
