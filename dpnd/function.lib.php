@@ -747,7 +747,6 @@ function deletemyfile($fileAndDirectory, $force = false)
             putDB($db, 'uploads');
             unlink(__DIR__.'/'.$fileAndDirectory);
             return 'Success';
-            break;
         }
     }
 }
